@@ -22,7 +22,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayoutWidget = QWidget(self.centralwidget)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(790, 0, 295, 311))
+        self.verticalLayoutWidget.setGeometry(QRect(770, 0, 351, 221))
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -41,22 +41,76 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addLayout(self.addButtons)
 
+        self.deleteObject = QPushButton(self.verticalLayoutWidget)
+        self.deleteObject.setObjectName(u"deleteObject")
+
+        self.verticalLayout.addWidget(self.deleteObject)
+
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.list = QListWidget(self.verticalLayoutWidget)
-        self.list.setObjectName(u"list")
+        self.currentObjectsView = QListView(self.verticalLayoutWidget)
+        self.currentObjectsView.setObjectName(u"currentObjectsView")
 
-        self.horizontalLayout.addWidget(self.list)
+        self.horizontalLayout.addWidget(self.currentObjectsView)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.verticalLayoutWidget_2 = QWidget(self.centralwidget)
         self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
-        self.verticalLayoutWidget_2.setGeometry(QRect(10, 0, 771, 611))
+        self.verticalLayoutWidget_2.setGeometry(QRect(10, 0, 691, 571))
         self.objectsLayout = QVBoxLayout(self.verticalLayoutWidget_2)
         self.objectsLayout.setObjectName(u"objectsLayout")
         self.objectsLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayoutWidget_3 = QWidget(self.centralwidget)
+        self.verticalLayoutWidget_3.setObjectName(u"verticalLayoutWidget_3")
+        self.verticalLayoutWidget_3.setGeometry(QRect(770, 230, 378, 161))
+        self.horizontalLayout_3 = QHBoxLayout(self.verticalLayoutWidget_3)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_2 = QVBoxLayout()
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.showInfo = QPushButton(self.verticalLayoutWidget_3)
+        self.showInfo.setObjectName(u"showInfo")
+
+        self.verticalLayout_2.addWidget(self.showInfo)
+
+        self.updateInfo = QPushButton(self.verticalLayoutWidget_3)
+        self.updateInfo.setObjectName(u"updateInfo")
+
+        self.verticalLayout_2.addWidget(self.updateInfo)
+
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.rColor = QTextEdit(self.verticalLayoutWidget_3)
+        self.rColor.setObjectName(u"rColor")
+
+        self.horizontalLayout_2.addWidget(self.rColor)
+
+        self.bColor = QTextEdit(self.verticalLayoutWidget_3)
+        self.bColor.setObjectName(u"bColor")
+
+        self.horizontalLayout_2.addWidget(self.bColor)
+
+        self.gColor = QTextEdit(self.verticalLayoutWidget_3)
+        self.gColor.setObjectName(u"gColor")
+
+        self.horizontalLayout_2.addWidget(self.gColor)
+
+        self.aColor = QTextEdit(self.verticalLayoutWidget_3)
+        self.aColor.setObjectName(u"aColor")
+
+        self.horizontalLayout_2.addWidget(self.aColor)
+
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_2)
+
+
+        self.horizontalLayout_3.addLayout(self.verticalLayout_2)
+
+        self.objectInfoWidget = QTableWidget(self.centralwidget)
+        self.objectInfoWidget.setObjectName(u"objectInfoWidget")
+        self.objectInfoWidget.setGeometry(QRect(770, 400, 341, 201))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -75,5 +129,8 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.addSphere.setText(QCoreApplication.translate("MainWindow", u"Add sphere", None))
         self.addBox.setText(QCoreApplication.translate("MainWindow", u"Add box", None))
+        self.deleteObject.setText(QCoreApplication.translate("MainWindow", u"delete", None))
+        self.showInfo.setText(QCoreApplication.translate("MainWindow", u"Show Info", None))
+        self.updateInfo.setText(QCoreApplication.translate("MainWindow", u"Update Info", None))
     # retranslateUi
 

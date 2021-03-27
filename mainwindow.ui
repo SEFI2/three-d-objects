@@ -17,10 +17,10 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>790</x>
+      <x>770</x>
       <y>0</y>
-      <width>295</width>
-      <height>311</height>
+      <width>351</width>
+      <height>221</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -43,9 +43,16 @@
       </layout>
      </item>
      <item>
+      <widget class="QPushButton" name="deleteObject">
+       <property name="text">
+        <string>delete</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QListWidget" name="list"/>
+        <widget class="QListView" name="currentObjectsView"/>
        </item>
       </layout>
      </item>
@@ -56,11 +63,67 @@
      <rect>
       <x>10</x>
       <y>0</y>
-      <width>771</width>
-      <height>611</height>
+      <width>691</width>
+      <height>571</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="objectsLayout"/>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>230</y>
+      <width>378</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QPushButton" name="showInfo">
+         <property name="text">
+          <string>Show Info</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="updateInfo">
+         <property name="text">
+          <string>Update Info</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QTextEdit" name="rColor"/>
+         </item>
+         <item>
+          <widget class="QTextEdit" name="bColor"/>
+         </item>
+         <item>
+          <widget class="QTextEdit" name="gColor"/>
+         </item>
+         <item>
+          <widget class="QTextEdit" name="aColor"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QTableWidget" name="objectInfoWidget">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>400</y>
+      <width>341</width>
+      <height>201</height>
+     </rect>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
