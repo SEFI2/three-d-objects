@@ -9,7 +9,6 @@ from PySide2.QtCore import QFile, QObject, SIGNAL
 from ui_mainwindow import Ui_MainWindow
 
 
-
 class Sphere(Qt3DExtras.QSphereMesh):
     def __init__(self):
         super().__init__()
