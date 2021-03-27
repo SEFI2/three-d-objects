@@ -5,7 +5,7 @@ from PySide2.Qt3DCore import (Qt3DCore)
 from PySide2.Qt3DExtras import (Qt3DExtras)
 
 from PySide2.QtWidgets import QApplication, QMainWindow, QWidget, QHBoxLayout, QVBoxLayout
-from PySide2.QtCore import QFile, QObject, SIGNAL
+from PySide2.QtCore import QFile, QObject, SIGNAL, QStringListModel
 from ui_mainwindow import Ui_MainWindow
 
 
@@ -27,52 +27,54 @@ class Box(Qt3DExtras.QCuboidMesh):
 class ObjectsWindow(QWidget):
     def __init__(self, ui):
         super().__init__()
-        self.ui = ui
+        self.par_ui = ui
 
-        # Contruct Layout
+        # Construct Layout
         layout = QVBoxLayout(self)
         self.view = Qt3DExtras.Qt3DWindow()
         container = QWidget.createWindowContainer(self.view)
         layout.addWidget(container)
-
+        self.objects = []
         # Camera
         self.camera = self.view.camera()
         self.camera.lens().setPerspectiveProjection(45, 16 / 9, 0.1, 1000)
         self.camera.setPosition(QVector3D(0, 0, 40))
         self.camera.setViewCenter(QVector3D(0, 0, 0))
 
-        # Root entity
+        # Root entity & Material
         self.rootEntity = Qt3DCore.QEntity()
-        self.view.setRootEntity(self.rootEntity)
-
-        # Material
         self.material = Qt3DExtras.QPhongMaterial(self.rootEntity)
 
         # First-person controller
         self.firstPersonController = Qt3DExtras.QFirstPersonCameraController(self.rootEntity)
         self.firstPersonController.setCamera(self.camera)
 
-        QObject.connect(self.ui.addSphere, SIGNAL('clicked()'), self.addSphere)
-        QObject.connect(self.ui.addBox, SIGNAL('clicked()'), self.addBox)
+        self.view.setRootEntity(self.rootEntity)
 
-        self.addSphere()
+        model = QStringListModel()
 
-    def addObject(self, type):
-        pass
+        QObject.connect(self.par_ui.addSphere, SIGNAL('clicked()'), self.addSphere)
+        QObject.connect(self.par_ui.addBox, SIGNAL('clicked()'), self.addBox)
+
+
 
     def addSphere(self):
         sphereEntity = Qt3DCore.QEntity(self.rootEntity)
+        sphere = Sphere()
+
+        sphereEntity.addComponent(sphere)
         sphereEntity.addComponent(self.material)
 
-        sphere = Sphere()
-        sphereEntity.addComponent(sphere)
+        self.objects.append([sphere, sphereEntity])
 
     def addBox(self):
         boxEntity = Qt3DCore.QEntity(self.rootEntity)
-        boxEntity.addComponent(self.material)
-        print('hah')
         box = Box()
+
         boxEntity.addComponent(box)
+        boxEntity.addComponent(self.material)
+
+        self.objects.append([box, boxEntity])
 
 
 class MainWindow(QMainWindow):
@@ -82,7 +84,9 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.ui.objectsLayout.addWidget(ObjectsWindow(self.ui))
+        objectsWindow = ObjectsWindow(self.ui)
+        self.ui.objectsLayout.addWidget(objectsWindow)
+
 
 
 
