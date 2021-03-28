@@ -64,6 +64,7 @@ class ObjectsWindow(QWidget):
         self.firstPersonController = Qt3DExtras.QFirstPersonCameraController(self.rootEntity)
         self.firstPersonController.setCamera(self.camera)
 
+        # Connect
         QObject.connect(self.par_ui.addSphere, SIGNAL('clicked()'), self.addSphere)
         QObject.connect(self.par_ui.addBox, SIGNAL('clicked()'), self.addBox)
         QObject.connect(self.par_ui.deleteObject, SIGNAL('clicked()'), self.deleteObject)
@@ -75,9 +76,8 @@ class ObjectsWindow(QWidget):
         self.objectsModel = QStringListModel()
         self.par_ui.currentObjectsView.setModel(self.objectsModel)
 
-        dumpData = self.loadDump()
-        print(dumpData)
-        for data in dumpData:
+        # Load dump data
+        for data in self.loadDump():
             if data['type'] == 'sphere':
                 self.addSphere()
             else:
@@ -91,8 +91,6 @@ class ObjectsWindow(QWidget):
                 self.objects[idx].figure.setXExtent(data['size1'])
                 self.objects[idx].figure.setYExtent(data['size2'])
                 self.objects[idx].figure.setZExtent(data['size3'])
-
-
         self.dump()
 
     def showInfo(self):
@@ -141,8 +139,6 @@ class ObjectsWindow(QWidget):
                 for j in range(4):
                     val = self.par_ui.objectInfoWidget.item(i,j)
                     newRow.append(float(val.text()))
-                print(newRow, i, j)
-
                 matrix.setRow(i, QVector4D(newRow[0], newRow[1], newRow[2], newRow[3]))
 
             object = self.objects[self.lastInfoRow]
@@ -234,7 +230,7 @@ class ObjectsWindow(QWidget):
             dumpData.append(data)
         with open('editorDump.pkl', 'wb') as output:
             pickle.dump(dumpData, output, pickle.HIGHEST_PROTOCOL)
-        print(dumpData)
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -250,8 +246,6 @@ class MainWindow(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-
     window = MainWindow()
     window.show()
-
     sys.exit(app.exec_())
