@@ -64,7 +64,7 @@ class Ui_MainWindow(object):
         self.objectsLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayoutWidget_3 = QWidget(self.centralwidget)
         self.verticalLayoutWidget_3.setObjectName(u"verticalLayoutWidget_3")
-        self.verticalLayoutWidget_3.setGeometry(QRect(770, 230, 378, 161))
+        self.verticalLayoutWidget_3.setGeometry(QRect(770, 230, 378, 191))
         self.horizontalLayout_3 = QHBoxLayout(self.verticalLayoutWidget_3)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
@@ -79,6 +79,36 @@ class Ui_MainWindow(object):
         self.updateInfo.setObjectName(u"updateInfo")
 
         self.verticalLayout_2.addWidget(self.updateInfo)
+
+        self.label_2 = QLabel(self.verticalLayoutWidget_3)
+        self.label_2.setObjectName(u"label_2")
+
+        self.verticalLayout_2.addWidget(self.label_2)
+
+        self.horizontalLayout_4 = QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.size1 = QTextEdit(self.verticalLayoutWidget_3)
+        self.size1.setObjectName(u"size1")
+
+        self.horizontalLayout_4.addWidget(self.size1)
+
+        self.size2 = QTextEdit(self.verticalLayoutWidget_3)
+        self.size2.setObjectName(u"size2")
+
+        self.horizontalLayout_4.addWidget(self.size2)
+
+        self.size3 = QTextEdit(self.verticalLayoutWidget_3)
+        self.size3.setObjectName(u"size3")
+
+        self.horizontalLayout_4.addWidget(self.size3)
+
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_4)
+
+        self.label = QLabel(self.verticalLayoutWidget_3)
+        self.label.setObjectName(u"label")
+
+        self.verticalLayout_2.addWidget(self.label)
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
@@ -110,7 +140,7 @@ class Ui_MainWindow(object):
 
         self.objectInfoWidget = QTableWidget(self.centralwidget)
         self.objectInfoWidget.setObjectName(u"objectInfoWidget")
-        self.objectInfoWidget.setGeometry(QRect(770, 400, 341, 201))
+        self.objectInfoWidget.setGeometry(QRect(770, 430, 381, 192))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -132,5 +162,7 @@ class Ui_MainWindow(object):
         self.deleteObject.setText(QCoreApplication.translate("MainWindow", u"delete", None))
         self.showInfo.setText(QCoreApplication.translate("MainWindow", u"Show Info", None))
         self.updateInfo.setText(QCoreApplication.translate("MainWindow", u"Update Info", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Size", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"RGB Color:", None))
     # retranslateUi
 

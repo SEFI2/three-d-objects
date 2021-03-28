@@ -1,4 +1,6 @@
 import sys
+import pickle
+
 from PySide2.QtCore import(Property, QObject, QPropertyAnimation, Signal)
 from PySide2.QtGui import (QGuiApplication, QMatrix4x4, QQuaternion, QVector3D, QVector4D, QColor)
 from PySide2.Qt3DCore import (Qt3DCore)
@@ -26,12 +28,14 @@ class Sphere(Qt3DExtras.QSphereMesh):
         super().__init__()
         self.setRadius(3)
 
+
 class Box(Qt3DExtras.QCuboidMesh):
     def __init__(self):
         super().__init__()
         self.setXExtent(4)
         self.setYExtent(4)
         self.setZExtent(4)
+
 
 class ObjectsWindow(QWidget):
     def __init__(self, ui):
@@ -71,30 +75,57 @@ class ObjectsWindow(QWidget):
         self.objectsModel = QStringListModel()
         self.par_ui.currentObjectsView.setModel(self.objectsModel)
 
+        dumpData = self.loadDump()
+        print(dumpData)
+        for data in dumpData:
+            if data['type'] == 'sphere':
+                self.addSphere()
+            else:
+                self.addBox()
+            idx = len(self.objects) - 1
+            self.objects[idx].transform.setMatrix(data['matrix'])
+        self.dump()
+
     def showInfo(self):
         row = self.par_ui.currentObjectsView.currentIndex().row()
         if row >= 0:
             self.lastInfoRow = row
             object = self.objects[self.lastInfoRow]
 
+            # show matrix
             data = object.transform.matrix().data()
             self.par_ui.objectInfoWidget.setRowCount(4)
             self.par_ui.objectInfoWidget.setColumnCount(4)
             for i in range(4):
                 for j in range(4):
-                    self.par_ui.objectInfoWidget.setItem(i,j,QTableWidgetItem(str(data[i * 4 + j])))
-            print(object.material.ambient().red())
+                    self.par_ui.objectInfoWidget.setItem(i, j, QTableWidgetItem(str(data[i * 4 + j])))
 
+            # show color
             ambient = object.material.ambient()
             self.par_ui.rColor.setText(str(ambient.red()))
             self.par_ui.gColor.setText(str(ambient.green()))
             self.par_ui.bColor.setText(str(ambient.blue()))
             self.par_ui.aColor.setText(str(ambient.alpha()))
 
+            # show size
+            if object.type == 'sphere':
+                self.par_ui.size1.show()
+                self.par_ui.size2.hide()
+                self.par_ui.size3.hide()
+                self.par_ui.size1.setText(str(object.figure.radius()))
+            else:
+                self.par_ui.size1.show()
+                self.par_ui.size2.show()
+                self.par_ui.size3.show()
+                self.par_ui.size1.setText(str(object.figure.xExtent()))
+                self.par_ui.size2.setText(str(object.figure.yExtent()))
+                self.par_ui.size3.setText(str(object.figure.zExtent()))
+
+
 
     def updateInfo(self):
         if self.lastInfoRow >= 0:
-            newData = []
+            # get matrix
             matrix = QMatrix4x4()
             for i in range(4):
                 newRow = []
@@ -105,17 +136,30 @@ class ObjectsWindow(QWidget):
 
                 matrix.setRow(i, QVector4D(newRow[0], newRow[1], newRow[2], newRow[3]))
 
-            transform = self.objects[self.lastInfoRow].transform
+            object = self.objects[self.lastInfoRow]
+
+            # update matrix
+            transform = object.transform
             transform.setMatrix(matrix)
 
+            # update color
             color = QColor()
             color.setRed(int(self.par_ui.rColor.toPlainText()))
             color.setGreen(int(self.par_ui.gColor.toPlainText()))
             color.setBlue(int(self.par_ui.bColor.toPlainText()))
             color.setAlpha(int(self.par_ui.aColor.toPlainText()))
-
-            material = self.objects[self.lastInfoRow].material
+            material = object.material
             material.setAmbient(color)
+
+            # update size
+            if object.type == 'sphere':
+                object.figure.setRadius(float(self.par_ui.size1.toPlainText()))
+            else:
+                object.figure.setXExtent(float(self.par_ui.size1.toPlainText()))
+                object.figure.setYExtent(float(self.par_ui.size2.toPlainText()))
+                object.figure.setZExtent(float(self.par_ui.size3.toPlainText()))
+            self.dump()
+
 
     def addSphere(self):
         self.addObject("sphere")
@@ -146,6 +190,7 @@ class ObjectsWindow(QWidget):
         idx = self.objectsModel.rowCount()
         self.objectsModel.insertRow(idx)
         self.objectsModel.setData(self.objectsModel.index(idx), "new_" + type)
+        self.dump()
 
     def deleteObject(self):
         row = self.par_ui.currentObjectsView.currentIndex().row()
@@ -158,8 +203,21 @@ class ObjectsWindow(QWidget):
             self.objects[row].entity.setEnabled(False)
 
             del self.objects[row]
+            self.dump()
 
-
+    def loadDump(self):
+        try:
+            with open('editorDump.pkl', 'rb') as input:
+                return pickle.load(input)
+        except:
+            return []
+    def dump(self):
+        dumpData = []
+        for obj in self.objects:
+            dumpData.append({'matrix': obj.transform.matrix(), 'type': obj.type})
+        with open('editorDump.pkl', 'wb') as output:
+            pickle.dump(dumpData, output, pickle.HIGHEST_PROTOCOL)
+        print(dumpData)
 
 class MainWindow(QMainWindow):
     def __init__(self):

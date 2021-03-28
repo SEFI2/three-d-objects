@@ -75,7 +75,7 @@
       <x>770</x>
       <y>230</y>
       <width>378</width>
-      <height>161</height>
+      <height>191</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -92,6 +92,33 @@
         <widget class="QPushButton" name="updateInfo">
          <property name="text">
           <string>Update Info</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Size</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QTextEdit" name="size1"/>
+         </item>
+         <item>
+          <widget class="QTextEdit" name="size2"/>
+         </item>
+         <item>
+          <widget class="QTextEdit" name="size3"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>RGB Color:</string>
          </property>
         </widget>
        </item>
@@ -119,9 +146,9 @@
     <property name="geometry">
      <rect>
       <x>770</x>
-      <y>400</y>
-      <width>341</width>
-      <height>201</height>
+      <y>430</y>
+      <width>381</width>
+      <height>192</height>
      </rect>
     </property>
    </widget>
