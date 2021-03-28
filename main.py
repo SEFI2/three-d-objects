@@ -84,6 +84,15 @@ class ObjectsWindow(QWidget):
                 self.addBox()
             idx = len(self.objects) - 1
             self.objects[idx].transform.setMatrix(data['matrix'])
+            self.objects[idx].material.setAmbient(data['ambient'])
+            if data['type'] == 'sphere':
+                self.objects[idx].figure.setRadius(data['size'])
+            else:
+                self.objects[idx].figure.setXExtent(data['size1'])
+                self.objects[idx].figure.setYExtent(data['size2'])
+                self.objects[idx].figure.setZExtent(data['size3'])
+
+
         self.dump()
 
     def showInfo(self):
@@ -211,10 +220,18 @@ class ObjectsWindow(QWidget):
                 return pickle.load(input)
         except:
             return []
+
     def dump(self):
         dumpData = []
         for obj in self.objects:
-            dumpData.append({'matrix': obj.transform.matrix(), 'type': obj.type})
+            data = {'matrix': obj.transform.matrix(), 'type': obj.type, 'ambient': obj.material.ambient()}
+            if obj.type == 'sphere':
+                data['size'] = obj.figure.radius()
+            else:
+                data['size1'] = obj.figure.xExtent()
+                data['size2'] = obj.figure.yExtent()
+                data['size3'] = obj.figure.zExtent()
+            dumpData.append(data)
         with open('editorDump.pkl', 'wb') as output:
             pickle.dump(dumpData, output, pickle.HIGHEST_PROTOCOL)
         print(dumpData)
